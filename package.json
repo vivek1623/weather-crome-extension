@@ -1,7 +1,7 @@
 {
-  "name": "react-crome-extension",
+  "name": "weather-crome-extension",
   "version": "1.0.0",
-  "description": "A reactjs crome extension",
+  "description": "Access Weather Updates for Any Location Simply by Name",
   "private": true,
   "scripts": {
     "start": "webpack --watch --progress --config webpack.dev.js",

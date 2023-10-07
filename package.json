@@ -10,6 +10,10 @@
   "author": "vivek vaibhav",
   "license": "ISC",
   "devDependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@fontsource/roboto": "^5.0.8",
+    "@mui/material": "^5.14.12",
     "@types/chrome": "0.0.246",
     "@types/react": "^18.2.25",
     "@types/react-dom": "^18.2.11",

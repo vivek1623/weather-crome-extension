@@ -74,6 +74,7 @@ const DeleteIconButton: React.FC<DeleteIconButtonProps> = ({
             size="small"
             sx={{ mr: 1 }}
             onClick={handleClose}
+            disableElevation
           >
             No
           </Button>
@@ -82,6 +83,7 @@ const DeleteIconButton: React.FC<DeleteIconButtonProps> = ({
             size="small"
             color="error"
             onClick={handleConfirmation}
+            disableElevation
           >
             Yes
           </Button>

@@ -32,7 +32,7 @@ const WeatherCard: React.FC<{ city: string }> = ({ city }) => {
     return (
       <Paper
         sx={{
-          p: 1.5,
+          p: 1,
         }}
       >
         <Skeleton variant="rounded" width="40%" />
@@ -43,7 +43,7 @@ const WeatherCard: React.FC<{ city: string }> = ({ city }) => {
     return (
       <Paper
         sx={{
-          p: 1.5,
+          p: 1,
         }}
       >
         <CustomCardHeader
@@ -61,7 +61,7 @@ const WeatherCard: React.FC<{ city: string }> = ({ city }) => {
   return (
     <Paper
       sx={{
-        p: 1.5,
+        p: 1,
       }}
     >
       <CustomCardHeader

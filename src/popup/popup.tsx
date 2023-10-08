@@ -14,6 +14,7 @@ import "../config/styles.css"
 
 import themeConfig from "../config/theme"
 
+import SearchHeader from "../components/SearchHeader"
 import WeatherCard from "../components/WeatherCard"
 
 const Popup: React.FC<{}> = () => {
@@ -23,7 +24,8 @@ const Popup: React.FC<{}> = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box p={2} bgcolor="background.default">
+      <Box p={1.5} bgcolor="background.default">
+        <SearchHeader />
         <WeatherCard city="London" />
       </Box>
     </ThemeProvider>

@@ -1,30 +1,32 @@
-import React, { useEffect, useState } from "react"
+import React, { useMemo } from "react"
 import { createRoot } from "react-dom/client"
+import {
+  ThemeProvider,
+  createTheme,
+  responsiveFontSizes,
+} from "@mui/material/styles"
+import CssBaseline from "@mui/material/CssBaseline"
+import Box from "@mui/material/Box"
 
+import "../config/common"
 import "./popup.css"
-import { fetchWeatherData } from "../config/utils"
+import "../config/styles.css"
+
+import themeConfig from "../config/theme"
+
+import WeatherCard from "../components/WeatherCard"
 
 const Popup: React.FC<{}> = () => {
-  const [loading, setLoading] = useState(false)
-  const [weatherData, setWeatherData] = useState(null)
-
-  useEffect(() => {
-    setLoading(true)
-    fetchWeatherData("patna")
-      .then(data => {
-        console.log("data", data)
-        setLoading(false)
-      })
-      .catch(err => {
-        console.log("err", err)
-        setLoading(false)
-      })
-  }, [])
+  let theme = useMemo(() => createTheme(themeConfig), [])
+  theme = responsiveFontSizes(theme)
 
   return (
-    <div>
-      <p>Hello popup</p>
-    </div>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Box p={2} bgcolor="background.default">
+        <WeatherCard city="London" />
+      </Box>
+    </ThemeProvider>
   )
 }
 

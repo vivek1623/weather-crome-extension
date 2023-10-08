@@ -23,9 +23,13 @@ export interface OpenWeatherData {
 export const fetchWeatherData = async (
   city: string
 ): Promise<OpenWeatherData> => {
-  const url = `${process.env.BASE_URL}/weather?q=${city}&appid=${process.env.WEATHER_API_KEY}`
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.WEATHER_API_KEY}`
   const res = await fetch(url)
   if (!res.ok) throw new Error("city not found")
   const data: OpenWeatherData = await res.json()
   return data
+}
+
+export function getWeatherIconSrc(iconCode: string) {
+  return `https://openweathermap.org/img/wn/${iconCode}@2x.png`
 }

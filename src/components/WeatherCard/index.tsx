@@ -1,21 +1,28 @@
 import React, { useEffect, useState } from "react"
-import Box from "@mui/material/Box"
 import Paper from "@mui/material/Paper"
 import Skeleton from "@mui/material/Skeleton"
 import Typography from "@mui/material/Typography"
-import PlaceIcon from "@mui/icons-material/Place"
+import Box from "@mui/material/Box"
 
-import { fetchWeatherData } from "../../config/utils"
+import {
+  fetchWeatherData,
+  OpenWeatherTempScale,
+  OpenWeatherData,
+  getWeatherIconSrc,
+} from "../../config/api"
 
 import CustomCardHeader from "../CustomCardHeader"
 
-const WeatherCard: React.FC<{ city: string }> = ({ city }) => {
-  const [loading, setLoading] = useState(false)
-  const [weatherData, setWeatherData] = useState(null)
+const WeatherCard: React.FC<{
+  city: string
+  tempScale: OpenWeatherTempScale
+}> = ({ city, tempScale }) => {
+  const [loading, setLoading] = useState<boolean>(false)
+  const [weatherData, setWeatherData] = useState<OpenWeatherData | null>(null)
 
   useEffect(() => {
     setLoading(true)
-    fetchWeatherData(city)
+    fetchWeatherData(city, tempScale)
       .then((data) => {
         setLoading(false)
         setWeatherData(data)
@@ -24,7 +31,7 @@ const WeatherCard: React.FC<{ city: string }> = ({ city }) => {
       .catch((err) => {
         setLoading(false)
       })
-  }, [])
+  }, [city, tempScale])
 
   const handleDeleteWeather = () => {}
 
@@ -48,10 +55,8 @@ const WeatherCard: React.FC<{ city: string }> = ({ city }) => {
       >
         <CustomCardHeader
           title={city}
-          Icon={PlaceIcon}
           onDelete={handleDeleteWeather}
           deleteProps={{}}
-          onEdit={undefined}
         />
         <Typography variant="subtitle2" color="warning">
           Sorry, Unable to find weather information for this location
@@ -66,17 +71,41 @@ const WeatherCard: React.FC<{ city: string }> = ({ city }) => {
     >
       <CustomCardHeader
         title={weatherData.name}
-        Icon={PlaceIcon}
         onDelete={handleDeleteWeather}
         deleteProps={{}}
-        onEdit={undefined}
       />
-      <Typography variant="h6" fontWeight="fontWeightBold">
-        {Math.round(weatherData.main.temp)}
-        <Typography variant="caption" ml={1}>
-          Feels like {Math.round(weatherData.main.feels_like)}
-        </Typography>
-      </Typography>
+      <Box display="flex" gap={2}>
+        {weatherData.weather.length > 0 && (
+          <Box
+            component="img"
+            src={getWeatherIconSrc(weatherData.weather[0].icon)}
+            alt="icon"
+            height={60}
+          />
+        )}
+        <Box flex={1}>
+          <Typography variant="h4" fontWeight="fontWeightBold">
+            {Math.round(weatherData.main.temp)}
+            <Typography variant="caption" ml={0.25}>
+              {tempScale === "metric" ? "℃" : "℉"}
+            </Typography>
+            {weatherData.weather.length > 0 && (
+              <Typography
+                component="span"
+                variant="h4"
+                fontWeight="fontWeightBold"
+                ml={2}
+              >
+                {weatherData.weather[0].main}
+              </Typography>
+            )}
+          </Typography>
+          <Typography component="p" variant="caption">
+            Feels like {Math.round(weatherData.main.feels_like)}
+            {tempScale === "metric" ? "℃" : "℉"}
+          </Typography>
+        </Box>
+      </Box>
     </Paper>
   )
 }

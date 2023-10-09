@@ -8,16 +8,24 @@ import AddIcon from "@mui/icons-material/Add"
 import AutoAwesomeMotionOutlinedIcon from "@mui/icons-material/AutoAwesomeMotionOutlined"
 import { Typography } from "@mui/material"
 
-import { OpenWeatherTempScale } from "../../config/api"
+import { OpenWeatherTempScale } from "../../utils/api"
 
 const SearchHeader: React.FC<{
   tempScale: OpenWeatherTempScale
   onChangeTempScale: (scale: OpenWeatherTempScale) => void
-}> = ({ tempScale, onChangeTempScale }) => {
+  onAddCity: (city: string) => void
+}> = ({ tempScale, onChangeTempScale, onAddCity }) => {
   const [city, setCity] = useState<string>("")
 
   const handleCityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCity(event.target.value)
+  }
+
+  const handleAddCity = () => {
+    if (city) {
+      setCity("")
+      onAddCity(city)
+    }
   }
 
   const handleTempScaleChange = (
@@ -62,6 +70,7 @@ const SearchHeader: React.FC<{
           mr: 1,
         }}
         disabled={!city}
+        onClick={handleAddCity}
         disableElevation
       >
         <AddIcon />

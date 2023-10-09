@@ -9,7 +9,7 @@ import {
   OpenWeatherTempScale,
   OpenWeatherData,
   getWeatherIconSrc,
-} from "../../config/api"
+} from "../../utils/api"
 
 import CustomCardHeader from "../CustomCardHeader"
 
@@ -39,18 +39,23 @@ const WeatherCard: React.FC<{
     return (
       <Paper
         sx={{
-          p: 1,
+          px: 1.5,
+          py: 1,
+          mb: 1
         }}
       >
         <Skeleton variant="rounded" width="40%" />
         <Skeleton variant="text" />
+        <Skeleton variant="text" width="70%" />
       </Paper>
     )
   else if (!loading && !weatherData)
     return (
       <Paper
         sx={{
-          p: 1,
+          px: 1.5,
+          py: 1,
+          mb: 1
         }}
       >
         <CustomCardHeader
@@ -66,7 +71,9 @@ const WeatherCard: React.FC<{
   return (
     <Paper
       sx={{
-        p: 1,
+        px: 1.5,
+        py: 1,
+        mb: 1
       }}
     >
       <CustomCardHeader
@@ -74,13 +81,14 @@ const WeatherCard: React.FC<{
         onDelete={handleDeleteWeather}
         deleteProps={{}}
       />
-      <Box display="flex" gap={2}>
+      <Box display="flex" gap={2.5}>
         {weatherData.weather.length > 0 && (
           <Box
             component="img"
             src={getWeatherIconSrc(weatherData.weather[0].icon)}
             alt="icon"
             height={60}
+            width={60}
           />
         )}
         <Box flex={1}>

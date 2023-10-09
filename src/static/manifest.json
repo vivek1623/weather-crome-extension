@@ -29,5 +29,5 @@
       "css": ["contentScript.css"]
     }
   ],
-  "permissions": []
+  "permissions": ["storage"]
 }

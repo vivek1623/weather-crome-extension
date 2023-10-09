@@ -20,7 +20,7 @@ import {
 
 import themeConfig from "../config/theme"
 
-import SearchHeader from "../components/SearchHeader"
+import AppHeader from "../components/AppHeader"
 import WeatherCard from "../components/WeatherCard"
 
 const Popup: React.FC<{}> = () => {
@@ -66,7 +66,7 @@ const Popup: React.FC<{}> = () => {
         flexDirection="column"
         bgcolor="background.paper"
       >
-        <SearchHeader
+        <AppHeader
           tempScale={tempScale}
           onChangeTempScale={handleTempScaleChange}
           onAddCity={handleAddCity}

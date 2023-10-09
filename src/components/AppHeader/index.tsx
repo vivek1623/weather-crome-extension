@@ -10,7 +10,7 @@ import { Typography } from "@mui/material"
 
 import { OpenWeatherTempScale } from "../../utils/api"
 
-const SearchHeader: React.FC<{
+const AppHeader: React.FC<{
   tempScale: OpenWeatherTempScale
   onChangeTempScale: (scale: OpenWeatherTempScale) => void
   onAddCity: (city: string) => void
@@ -53,7 +53,7 @@ const SearchHeader: React.FC<{
           },
         }}
         size="small"
-        placeholder="Search City"
+        placeholder="Add New City"
         value={city}
         onChange={handleCityChange}
       />
@@ -109,4 +109,4 @@ const SearchHeader: React.FC<{
   )
 }
 
-export default SearchHeader
+export default AppHeader

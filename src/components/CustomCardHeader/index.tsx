@@ -29,8 +29,8 @@ const CustomCardHeader: React.FC<CustomCardHeaderProps> = ({
       <Box position="absolute" top={0} right={0}>
         {onDelete && (
           <DeleteIconButton
-            title="Delete this information"
-            description="Are you sure want to delete this weather information"
+            title="Delete this city information"
+            description="Are you sure want to delete this city"
             aria-label="delete"
             size="small"
             sx={{

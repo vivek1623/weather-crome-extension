@@ -1,14 +1,8 @@
 import { OpenWeatherTempScale } from "./api"
 
-export interface LocalStorageOptions {
-  hasAutoOverlay: boolean
-  homeCity: string
-  tempScale: OpenWeatherTempScale
-}
-
 export interface LocalStorage {
   cities?: string[]
-  options?: LocalStorageOptions
+  tempScale?: OpenWeatherTempScale
 }
 
 export type LocalStorageKeys = keyof LocalStorage

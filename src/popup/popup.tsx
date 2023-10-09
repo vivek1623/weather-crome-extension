@@ -28,8 +28,9 @@ const Popup: React.FC<{}> = () => {
   const [cities, setCities] = useState<string[]>([])
 
   useEffect(() => {
-    getDataFromLocalStorage(["cities"]).then((res) => {
+    getDataFromLocalStorage(["cities", "tempScale"]).then((res) => {
       setCities(res.cities || [])
+      setTempScale(res.tempScale || "metric")
     })
   }, [])
 
@@ -37,11 +38,20 @@ const Popup: React.FC<{}> = () => {
   theme = responsiveFontSizes(theme)
 
   const handleTempScaleChange = (scale: OpenWeatherTempScale) => {
-    setTempScale(scale)
+    setDataInLocalStorage("tempScale", scale).then(() => setTempScale(scale))
   }
 
   const handleAddCity = (city: string) => {
+    const index = cities.findIndex((c) => c === city)
+    if (index !== -1) return
     const updatedCities = [...cities, city]
+    setDataInLocalStorage("cities", updatedCities).then(() =>
+      setCities(updatedCities)
+    )
+  }
+
+  const handleCardDelete = (city: string) => {
+    const updatedCities = cities.filter((c) => c !== city)
     setDataInLocalStorage("cities", updatedCities).then(() =>
       setCities(updatedCities)
     )
@@ -50,21 +60,43 @@ const Popup: React.FC<{}> = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Box p={1.5} bgcolor="background.default">
+      <Box
+        height="100%"
+        display="flex"
+        flexDirection="column"
+        bgcolor="background.paper"
+      >
         <SearchHeader
           tempScale={tempScale}
           onChangeTempScale={handleTempScaleChange}
           onAddCity={handleAddCity}
         />
-        {cities?.map((city, index) => (
-          <WeatherCard key={index} city={city} tempScale={tempScale} />
-        ))}
+        <Box
+          flex={1}
+          overflow="auto"
+          mx={1}
+          mb={1}
+          p={1.5}
+          bgcolor="background.default"
+          borderRadius={1}
+          boxShadow={(theme) => `${theme.shadows[2]} inset`}
+        >
+          {cities?.map((city) => (
+            <WeatherCard
+              key={city}
+              city={city}
+              tempScale={tempScale}
+              onDelete={handleCardDelete}
+            />
+          ))}
+        </Box>
       </Box>
     </ThemeProvider>
   )
 }
 
 const rootElement = document.createElement("div")
+rootElement.style.height = "100%"
 document.body.appendChild(rootElement)
 const root = createRoot(rootElement)
 root.render(<Popup />)

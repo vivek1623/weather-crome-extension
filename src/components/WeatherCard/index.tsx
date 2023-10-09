@@ -16,7 +16,8 @@ import CustomCardHeader from "../CustomCardHeader"
 const WeatherCard: React.FC<{
   city: string
   tempScale: OpenWeatherTempScale
-}> = ({ city, tempScale }) => {
+  onDelete: (city: string) => void
+}> = ({ city, tempScale, onDelete }) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [weatherData, setWeatherData] = useState<OpenWeatherData | null>(null)
 
@@ -33,7 +34,9 @@ const WeatherCard: React.FC<{
       })
   }, [city, tempScale])
 
-  const handleDeleteWeather = () => {}
+  const handleDeleteWeather = () => {
+    onDelete(city)
+  }
 
   if (loading)
     return (
@@ -41,7 +44,7 @@ const WeatherCard: React.FC<{
         sx={{
           px: 1.5,
           py: 1,
-          mb: 1
+          mb: 1,
         }}
       >
         <Skeleton variant="rounded" width="40%" />
@@ -55,7 +58,7 @@ const WeatherCard: React.FC<{
         sx={{
           px: 1.5,
           py: 1,
-          mb: 1
+          mb: 1,
         }}
       >
         <CustomCardHeader
@@ -73,7 +76,7 @@ const WeatherCard: React.FC<{
       sx={{
         px: 1.5,
         py: 1,
-        mb: 1
+        mb: 1,
       }}
     >
       <CustomCardHeader

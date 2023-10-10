@@ -26,11 +26,13 @@ import WeatherCard from "../components/WeatherCard"
 const Popup: React.FC<{}> = () => {
   const [tempScale, setTempScale] = useState<OpenWeatherTempScale>("metric")
   const [cities, setCities] = useState<string[]>([])
+  const [homeCity, setHomeCity] = useState<string>("")
 
   useEffect(() => {
-    getDataFromLocalStorage(["cities", "tempScale"]).then((res) => {
-      setCities(res.cities || [])
-      setTempScale(res.tempScale || "metric")
+    getDataFromLocalStorage(["cities", "tempScale", "settings"]).then((res) => {
+      setCities(res?.cities || [])
+      setTempScale(res?.tempScale || "metric")
+      setHomeCity(res?.settings?.homeCity || "")
     })
   }, [])
 
@@ -42,6 +44,7 @@ const Popup: React.FC<{}> = () => {
   }
 
   const handleAddCity = (city: string) => {
+    if (city && homeCity && city === homeCity) return
     const index = cities.findIndex((c) => c === city)
     if (index !== -1) return
     const updatedCities = [...cities, city]
@@ -81,6 +84,9 @@ const Popup: React.FC<{}> = () => {
           borderRadius={1}
           boxShadow={(theme) => `${theme.shadows[2]} inset`}
         >
+          {homeCity && (
+            <WeatherCard city={homeCity} tempScale={tempScale} isHomeCity />
+          )}
           {cities?.map((city) => (
             <WeatherCard
               key={city}

@@ -4,7 +4,7 @@ declare module "@mui/material/styles"
 const theme = {
   palette: {
     primary: {
-      main: "#b660e0",
+      main: "#309ecf",
     },
     secondary: {
       main: "#0ca975",
@@ -54,7 +54,7 @@ const theme = {
     "30px 31px 85px rgba(0, 0, 0, 0.2)",
     "32px 33px 90px rgba(0, 0, 0, 0.2)",
     "34px 35px 95px rgba(0, 0, 0, 0.2)",
-    "36px 37px 100px rgba(0, 0, 0, 0.2)"
+    "36px 37px 100px rgba(0, 0, 0, 0.2)",
   ] as Shadows,
 }
 

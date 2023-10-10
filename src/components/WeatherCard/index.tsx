@@ -3,6 +3,8 @@ import Paper from "@mui/material/Paper"
 import Skeleton from "@mui/material/Skeleton"
 import Typography from "@mui/material/Typography"
 import Box from "@mui/material/Box"
+import Chip from "@mui/material/Chip"
+import HomeIcon from '@mui/icons-material/Home';
 
 import {
   fetchWeatherData,
@@ -14,10 +16,11 @@ import {
 import CustomCardHeader from "../CustomCardHeader"
 
 const WeatherCard: React.FC<{
+  isHomeCity?: boolean
   city: string
   tempScale: OpenWeatherTempScale
-  onDelete: (city: string) => void
-}> = ({ city, tempScale, onDelete }) => {
+  onDelete?: (city: string) => void
+}> = ({ isHomeCity, city, tempScale, onDelete }) => {
   const [loading, setLoading] = useState<boolean>(false)
   const [weatherData, setWeatherData] = useState<OpenWeatherData | null>(null)
 
@@ -63,7 +66,7 @@ const WeatherCard: React.FC<{
       >
         <CustomCardHeader
           title={city}
-          onDelete={handleDeleteWeather}
+          onDelete={onDelete ? handleDeleteWeather : null}
           deleteProps={{}}
         />
         <Typography variant="subtitle2" color="warning">
@@ -81,8 +84,21 @@ const WeatherCard: React.FC<{
     >
       <CustomCardHeader
         title={weatherData.name}
-        onDelete={handleDeleteWeather}
+        onDelete={onDelete ? handleDeleteWeather : undefined}
         deleteProps={{}}
+        children={
+          isHomeCity ? (
+            <Chip
+              size="small"
+              label="HOME"
+              color="primary"
+              sx={{
+                fontWeight: "fontWeightMedium",
+              }}
+              icon={<HomeIcon />}
+            />
+          ) : null
+        }
       />
       <Box display="flex" gap={2.5}>
         {weatherData.weather.length > 0 && (

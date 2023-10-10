@@ -1,4 +1,4 @@
-import React from "react"
+import React, { ReactNode } from "react"
 import Box, { BoxProps } from "@mui/material/Box"
 import Typography from "@mui/material/Typography"
 import { IconButtonOwnProps } from "@mui/material/IconButton"
@@ -8,13 +8,15 @@ import DeleteIconButton from "../DeleteIconButton"
 interface CustomCardHeaderProps extends BoxProps {
   title: string
   deleteProps: IconButtonOwnProps
-  onDelete: () => void
+  children?: React.ReactNode
+  onDelete?: () => void | undefined
 }
 
 const CustomCardHeader: React.FC<CustomCardHeaderProps> = ({
   title,
   onDelete,
   deleteProps,
+  children,
   ...restProps
 }) => {
   return (
@@ -22,11 +24,12 @@ const CustomCardHeader: React.FC<CustomCardHeaderProps> = ({
       mb={0.5}
       display="flex"
       justifyContent="space-between"
-      pr={4}
+      pr={6}
       position="relative"
       {...restProps}
     >
       <Box position="absolute" top={0} right={0}>
+        {children}
         {onDelete && (
           <DeleteIconButton
             title="Delete this city information"

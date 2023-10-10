@@ -45,9 +45,9 @@ const Popup: React.FC<{}> = () => {
 
   const handleAddCity = (city: string) => {
     if (!city || city === homeCity) return
-
     if (cities.includes(city)) return
-    const updatedCities = [...cities, city]
+    
+    const updatedCities = [city, ...cities]
     setDataInLocalStorage("cities", updatedCities).then(() =>
       setCities(updatedCities)
     )

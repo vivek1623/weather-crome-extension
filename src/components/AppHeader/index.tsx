@@ -17,6 +17,11 @@ const AppHeader: React.FC<{
 }> = ({ tempScale, onChangeTempScale, onAddCity }) => {
   const [city, setCity] = useState<string>("")
 
+  const handleInputKeyDown = (e: React.KeyboardEvent<HTMLImageElement>) => {
+    if (e.key === "Enter" && !e.shiftKey && city?.trim().length > 0)
+      handleAddCity()
+  }
+
   const handleCityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setCity(event.target.value)
   }
@@ -56,6 +61,7 @@ const AppHeader: React.FC<{
         placeholder="Add New City"
         value={city}
         onChange={handleCityChange}
+        onKeyDown={handleInputKeyDown}
       />
       <Button
         variant="contained"

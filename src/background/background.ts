@@ -15,7 +15,7 @@ chrome.runtime.onInstalled.addListener(() => {
   })
 
   chrome.alarms.create("weather-home-city-alarm", {
-    periodInMinutes: 1,
+    periodInMinutes: 60,
   })
 
   chrome.contextMenus.create({

@@ -29,7 +29,7 @@ const AppHeader: React.FC<{
   const handleAddCity = () => {
     if (city) {
       setCity("")
-      onAddCity(city)
+      onAddCity(city.toLocaleLowerCase())
     }
   }
 

@@ -29,5 +29,5 @@
       "css": ["contentScript.css"]
     }
   ],
-  "permissions": ["storage"]
+  "permissions": ["storage", "alarms", "contextMenus"]
 }

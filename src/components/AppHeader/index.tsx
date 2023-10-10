@@ -42,6 +42,18 @@ const AppHeader: React.FC<{
     onChangeTempScale(selectedScale)
   }
 
+  const handleOverlayClick = async () => {
+    const tabs = await chrome.tabs.query({
+      active: true,
+      currentWindow: true,
+    })
+    if (tabs.length > 0) {
+      chrome.tabs.sendMessage(tabs[0].id, {
+        type: "toggleOverlay",
+      })
+    }
+  }
+
   return (
     <Box display="flex" p={1.5}>
       <TextField
@@ -90,6 +102,7 @@ const AppHeader: React.FC<{
           boxShadow: 0,
           mr: 1,
         }}
+        onClick={handleOverlayClick}
       >
         <AutoAwesomeMotionOutlinedIcon />
       </IconButton>

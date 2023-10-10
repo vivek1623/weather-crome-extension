@@ -34,6 +34,22 @@ const ContentScript: React.FC<{}> = () => {
     })
   }, [])
 
+  useEffect(() => {
+    const handleMessageListeners = (payload: {
+      type: string
+      data?: object
+    }) => {
+      if (payload.type === "toggleOverlay") {
+        setIsActive((prev) => !prev)
+      }
+    }
+
+    chrome.runtime.onMessage.addListener(handleMessageListeners)
+    return () => {
+      chrome.runtime.onMessage.removeListener(handleMessageListeners)
+    }
+  }, [])
+
   const handleDeleteOverlay = () => setIsActive(false)
 
   if (!homeCity) return false

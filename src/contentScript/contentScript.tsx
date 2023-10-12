@@ -1,5 +1,4 @@
-console.log("contentScript running...")
-import React, { useMemo, useState, useEffect } from "react"
+import React, { useMemo, useState, useEffect, useRef } from "react"
 import { createRoot } from "react-dom/client"
 import {
   ThemeProvider,
@@ -22,6 +21,10 @@ const ContentScript: React.FC<{}> = () => {
   const [isActive, setIsActive] = useState<boolean>(false)
   const [homeCity, setHomeCity] = useState<string>("")
   const [tempScale, setTempScale] = useState<OpenWeatherTempScale>("metric")
+  const [isDragging, setIsDragging] = useState<boolean>(false)
+  const [offset, setOffset] = useState<{ x: number; y: number }>({ x: 0, y: 0 })
+
+  const cardRef = useRef(null)
 
   let theme = useMemo(() => createTheme(themeConfig), [])
   theme = responsiveFontSizes(theme)
@@ -50,7 +53,45 @@ const ContentScript: React.FC<{}> = () => {
     }
   }, [])
 
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      if (isDragging && cardRef.current) {
+        const card = cardRef.current
+        const x = e.clientX - offset.x
+        const y = e.clientY - offset.y
+        card.style.transform = `translate(${x}px, ${y}px)`
+      }
+    }
+
+    const handleMouseUp = () => setIsDragging(false)
+
+    if (isDragging) {
+      document.addEventListener("mousemove", handleMouseMove)
+      document.addEventListener("mouseup", handleMouseUp)
+    } else {
+      document.removeEventListener("mousemove", handleMouseMove)
+      document.removeEventListener("mouseup", handleMouseUp)
+    }
+
+    return () => {
+      document.removeEventListener("mousemove", handleMouseMove)
+      document.removeEventListener("mouseup", handleMouseUp)
+    }
+  }, [isDragging])
+
   const handleDeleteOverlay = () => setIsActive(false)
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    e.preventDefault()
+    setIsDragging(true)
+    const card = cardRef.current
+    if (card) {
+      const rect = card.getBoundingClientRect()
+      const offsetX = e.clientX - rect.left
+      const offsetY = e.clientY - rect.top
+      setOffset({ x: offsetX, y: offsetY })
+    }
+  }
 
   if (!homeCity) return false
   else if (isActive)
@@ -58,13 +99,15 @@ const ContentScript: React.FC<{}> = () => {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Box
+          ref={cardRef}
           position="fixed"
-          bottom={24}
+          top={24}
           right={24}
           minWidth={300}
           sx={{
-            zIndex: (theme) => theme.zIndex.appBar + 1,
+            zIndex: (theme) => theme.zIndex.modal - 100,
           }}
+          onMouseDown={handleMouseDown}
         >
           <WeatherCard
             city={homeCity}

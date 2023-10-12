@@ -40,10 +40,18 @@ const ContentScript: React.FC<{}> = () => {
   useEffect(() => {
     const handleMessageListeners = (payload: {
       type: string
-      data?: object
+      data?: {
+        tempScale?: OpenWeatherTempScale
+      }
     }) => {
+      console.log("message lister", payload)
       if (payload.type === "toggleOverlay") {
         setIsActive((prev) => !prev)
+      } else if (
+        payload.type === "updateTempScale" &&
+        payload?.data?.tempScale
+      ) {
+        setTempScale(payload?.data?.tempScale)
       }
     }
 
@@ -102,7 +110,7 @@ const ContentScript: React.FC<{}> = () => {
           ref={cardRef}
           position="fixed"
           top={24}
-          right={24}
+          left={24}
           minWidth={300}
           sx={{
             zIndex: (theme) => theme.zIndex.modal - 100,

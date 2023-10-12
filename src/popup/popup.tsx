@@ -40,7 +40,21 @@ const Popup: React.FC<{}> = () => {
   theme = responsiveFontSizes(theme)
 
   const handleTempScaleChange = (scale: OpenWeatherTempScale) => {
-    setDataInLocalStorage("tempScale", scale).then(() => setTempScale(scale))
+    setDataInLocalStorage("tempScale", scale).then(async () => {
+      setTempScale(scale)
+      const tabs = await chrome.tabs.query({
+        active: true,
+        currentWindow: true,
+      })
+      if (tabs.length > 0) {
+        chrome.tabs.sendMessage(tabs[0].id, {
+          type: "updateTempScale",
+          data: {
+            tempScale: scale,
+          },
+        })
+      }
+    })
   }
 
   const handleAddCity = (city: string) => {

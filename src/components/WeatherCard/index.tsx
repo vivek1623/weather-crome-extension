@@ -30,7 +30,6 @@ const WeatherCard: React.FC<{
       .then((data) => {
         setLoading(false)
         setWeatherData(data)
-        console.log(data)
       })
       .catch((err) => {
         setLoading(false)

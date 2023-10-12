@@ -48,7 +48,6 @@ const Options: React.FC<{}> = () => {
         if (res.settings) setSettings(res.settings)
       })
       .catch((err) => {
-        console.error(err)
         enqueueSnackbar("Sorry unable to loaded default data", {
           variant: "error",
         })
@@ -79,7 +78,6 @@ const Options: React.FC<{}> = () => {
         enqueueSnackbar("Settings updated successfully", { variant: "success" })
       })
       .catch((err) => {
-        console.error(err)
         enqueueSnackbar("Something went wrong", { variant: "error" })
       })
   }

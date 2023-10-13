@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Weather",
-  "description": "Access Weather Updates for Any Location Simply by Name",
+  "description": "Get weather updates for any location just by its name.",
   "version": "1.0.0",
   "icons": {
     "16": "images/icon-16.png",

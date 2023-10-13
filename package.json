@@ -1,7 +1,7 @@
 {
   "name": "weather-crome-extension",
   "version": "1.0.0",
-  "description": "Access Weather Updates for Any Location Simply by Name",
+  "description": "Get weather updates for any location just by its name.",
   "private": true,
   "scripts": {
     "start": "webpack --watch --progress --config webpack.dev.js",
